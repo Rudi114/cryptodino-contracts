@@ -11,8 +11,22 @@ cd into contract specific folder
 cargo test -- --nocapture
 ```
 
-### Deploying the contracts
-cd into contract specific folder
+### Deploying DinoToken
 ```
-near deploy --wasmFile target/wasm32-unknown-unknown/release/<contract-name-snake-case>.wasm --accountId <YOUR_ACCOUNT_HERE>
+near deploy --accountId rudi114.testnet --wasmFile target/wasm32-unknown-unknown/release/dino_token.wasm --initFunction new --initArgs '{"owner_id": "rudi114.testnet", "total_supply": "10000000", "metadata": {
+    "spec": "ft-1.0.0",
+    "name": "dinotoken",
+    "symbol": "DINO",
+    "decimals": 18
+}}'
+```
+
+### Deploying DinoNFT
+```
+near deploy --accountId rudi114.testnet --wasmFile target/wasm32-unknown-unknown/release/dino_nft.wasm --initFunction new --initArgs '{"owner_id": "rudi114.testnet", "total_supply": "10000000", "metadata": {
+    "spec": "nft-1.0.0",
+    "name": "dinoNFT",
+    "symbol": "DINONFT",
+    "decimals": 1
+}}'
 ```
