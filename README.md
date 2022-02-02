@@ -30,3 +30,8 @@ near deploy --accountId rudi114.testnet --wasmFile target/wasm32-unknown-unknown
     "decimals": 1
 }}'
 ```
+
+### Check Account Balance
+```
+near call rudi114.testnet ft_balance_of '{"account_id": "rudi114.testnet" }' --account-id rudi114.testnet
+```
