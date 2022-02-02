@@ -13,7 +13,7 @@ cargo test -- --nocapture
 
 ### Deploying DinoToken
 ```
-near deploy --accountId rudi114.testnet --wasmFile target/wasm32-unknown-unknown/release/dino_token.wasm --initFunction new --initArgs '{"owner_id": "rudi114.testnet", "total_supply": "10000000", "metadata": {
+near deploy --accountId dinotoken.testnet --wasmFile target/wasm32-unknown-unknown/release/dino_token.wasm --initFunction new --initArgs '{"owner_id": "dinotoken.testnet", "total_supply": "10000000", "metadata": {
     "spec": "ft-1.0.0",
     "name": "dinotoken",
     "symbol": "DINO",
@@ -23,11 +23,10 @@ near deploy --accountId rudi114.testnet --wasmFile target/wasm32-unknown-unknown
 
 ### Deploying DinoNFT
 ```
-near deploy --accountId rudi114.testnet --wasmFile target/wasm32-unknown-unknown/release/dino_nft.wasm --initFunction new --initArgs '{"owner_id": "rudi114.testnet", "total_supply": "10000000", "metadata": {
+near deploy --accountId dinonft.testnet --wasmFile target/wasm32-unknown-unknown/release/dino_nft.wasm --initFunction new --initArgs '{"owner_id": "dinonft.testnet", "metadata": {
     "spec": "nft-1.0.0",
     "name": "dinoNFT",
     "symbol": "DINONFT",
-    "decimals": 1
 }}'
 ```
 
