@@ -72,7 +72,17 @@ impl Contract {
         };
         this.token.internal_register_account(owner_id.as_ref());
         this.token.internal_deposit(owner_id.as_ref(), total_supply.into());
+        // implicit return
         this
+    }
+
+    /// A very insecure function to claim tokens, our shim for the "Offline Problem".
+    /// For more information, see the "Offline Problem" section in our technical writeup.
+    /// A robust version of this would start with a require statement, callable only by a certain address.
+    /// It would be called from either a backend server hosted on Akash, or from a set of addresses via a complex solution
+    /// based around offline consensus
+    pub fn claim(&mut self, receiver_id: ValidAccountId, amount: U128) {
+        let _ = &self.token.ft_transfer(receiver_id, amount, None);
     }
 
     fn on_account_closed(&mut self, account_id: AccountId, balance: Balance) {
@@ -160,5 +170,48 @@ mod tests {
             .build());
         assert_eq!(contract.ft_balance_of(accounts(2)).0, (TOTAL_SUPPLY - transfer_amount));
         assert_eq!(contract.ft_balance_of(accounts(1)).0, transfer_amount);
+    }
+
+    #[test]
+    fn test_claim() {
+        // Arrange
+        let mut context = get_context(accounts(2));
+        testing_env!(context.build());
+        let mut contract = Contract::new_default_meta(accounts(1).into(), TOTAL_SUPPLY.into());
+
+        testing_env!(context
+            .storage_usage(env::storage_usage())
+            .attached_deposit(contract.storage_balance_bounds().min.into())
+            .predecessor_account_id(accounts(1))
+            .build());
+        contract.storage_deposit(None, None);
+        testing_env!(context
+            .storage_usage(env::storage_usage())
+            .attached_deposit(contract.storage_balance_bounds().min.into())
+            .predecessor_account_id(accounts(2))
+            .build());
+        // Paying for account registration for contract owner and claimer
+        contract.storage_deposit(None, None);
+
+        // Act
+        testing_env!(context
+            .storage_usage(env::storage_usage())
+            .attached_deposit(1)
+            .predecessor_account_id(accounts(1))
+            .build());
+
+        let claim_amount = 127;
+        contract.claim(accounts(2), claim_amount.into());
+
+        // Assert
+        testing_env!(context
+            .storage_usage(env::storage_usage())
+            .account_balance(env::account_balance())
+            .is_view(true)
+            .attached_deposit(0)
+            .build());
+
+        assert_eq!(contract.ft_balance_of(accounts(1)).0, (TOTAL_SUPPLY - claim_amount));
+        assert_eq!(contract.ft_balance_of(accounts(2)).0, (claim_amount));
     }
 }
