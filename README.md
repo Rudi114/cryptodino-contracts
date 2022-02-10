@@ -18,7 +18,7 @@ cargo test -- --nocapture
 
 1. Deploy the contract
     ```bash
-    near deploy --accountId dinotoken.<your_account_id>.testnet --wasmFile target/wasm32-unknown-unknown/release/dino_token.wasm --initFunction new --initArgs '{"owner_id": "dinotoken.testnet", "total_supply": "10000000", "metadata": {
+    near deploy --accountId dinotoken.<your_account_id>.testnet --wasmFile target/wasm32-unknown-unknown/release/dino_token.wasm --initFunction new --initArgs '{"owner_id": "dinotoken.<your_account_id>.testnet", "total_supply": "10000000", "metadata": {
         "spec": "ft-1.0.0",
         "name": "dinotoken",
         "symbol": "DINO",
@@ -33,7 +33,7 @@ cargo test -- --nocapture
     ```
 1. Deploy the contract
     ```bash
-    near deploy --accountId dinonft.<your_account_id>.testnet --wasmFile target/wasm32-unknown-unknown/release/dino_nft.wasm --initFunction new --initArgs '{"owner_id": "dinonft.testnet", "metadata": {
+    near deploy --accountId dinonft.<your_account_id>.testnet --wasmFile target/wasm32-unknown-unknown/release/dino_nft.wasm --initFunction new --initArgs '{"owner_id": "dinonft.<your_account_id>.testnet", "metadata": {
         "spec": "nft-1.0.0",
         "name": "dinoNFT",
         "symbol": "DINONFT"
@@ -50,7 +50,7 @@ For ex. to redeploy the NFT contract, do
 ```bash
 near delete dinonft.<your_account_id>.testnet <your_account_id>.testnet
 near create-account dinonft.<your_account_id>.testnet --masterAccount <your_account_id>.testnet
-near deploy --accountId dinonft.<your_account_id>.testnet --wasmFile target/wasm32-unknown-unknown/release/dino_nft.wasm --initFunction new --initArgs '{"owner_id": "dinonft.testnet", "metadata": {
+near deploy --accountId dinonft.<your_account_id>.testnet --wasmFile target/wasm32-unknown-unknown/release/dino_nft.wasm --initFunction new --initArgs '{"owner_id": "dinonft.<your_account_id>.testnet", "metadata": {
     "spec": "nft-1.0.0",
     "name": "dinoNFT",
     "symbol": "DINONFT"
