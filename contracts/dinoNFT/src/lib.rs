@@ -49,6 +49,11 @@ enum StorageKey {
 
 #[near_bindgen]
 impl Contract {
+    // not metadata for steps, but state vars
+    // isHatched: bool,
+    // stepsIncubated: int,
+    // requiredStepsToHatch: int,
+
     /// Initializes the contract owned by `owner_id` with
     /// default metadata (for example purposes only).
     #[init]
@@ -57,8 +62,8 @@ impl Contract {
             owner_id,
             NFTContractMetadata {
                 spec: NFT_METADATA_SPEC.to_string(),
-                name: "Example NEAR non-fungible token".to_string(),
-                symbol: "EXAMPLE".to_string(),
+                name: "DINONFT".to_string(),
+                symbol: "DINONFT".to_string(),
                 icon: Some(DATA_IMAGE_SVG_NEAR_ICON.to_string()),
                 base_uri: None,
                 reference: None,
